@@ -1,13 +1,4 @@
 definitions:
-  models.ChangePassword:
-    properties:
-      id:
-        type: string
-      newPassword:
-        type: string
-      oldPassword:
-        type: string
-    type: object
   models.CreateUser:
     properties:
       age:
@@ -31,6 +22,15 @@ definitions:
   models.LoginRes:
     properties:
       token:
+        type: string
+    type: object
+  models.UpdateUser:
+    properties:
+      age:
+        type: integer
+      name:
+        type: string
+      phone_number:
         type: string
     type: object
   models.User:
@@ -67,45 +67,6 @@ definitions:
 info:
   contact: {}
 paths:
-  /change/{id}:
-    put:
-      consumes:
-      - application/json
-      description: api for update password
-      parameters:
-      - description: id of user
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: data of users
-        in: body
-        name: changePassword
-        required: true
-        schema:
-          $ref: '#/definitions/models.ChangePassword'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/response.ErrorResp'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/response.ErrorResp'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/response.ErrorResp'
-      summary: change password
-      tags:
-      - changePassword
   /login:
     post:
       consumes:
@@ -266,7 +227,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.CreateUser'
+          $ref: '#/definitions/models.UpdateUser'
       produces:
       - application/json
       responses:

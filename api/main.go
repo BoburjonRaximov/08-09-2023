@@ -16,11 +16,10 @@ import (
 func NewServer(h *handler.Handler) *gin.Engine {
 	r := gin.Default()
 	r.Use(helper.Logger)
-	v1 := r.Group("v1")
-	v1.Use(helper.AuthMiddleware)
-	r.POST("/change/:id", h.ChangePassword)
-	r.POST("/login", h.Login)
+
+	r.POST("/login", h.Login,helper.Logger)
 	r.POST("/user", h.CreateUser)
+	r.Use(helper.EndMiddleware)
 	r.GET("/user", h.GetAllUsers)
 	r.GET("/user/:id", h.GetUser)
 	r.PUT("/user/:id", h.UpdateUser)

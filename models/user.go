@@ -8,6 +8,12 @@ type CreateUser struct {
 	PhoneNumber string `json:"phone_number"`
 }
 
+type UpdateUser struct {
+	Name        string `json:"name"`
+	Age         int    `json:"age"`
+	PhoneNumber string `json:"phone_number"`
+}
+
 type LoginReq struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -34,7 +40,14 @@ type RequestByUsername struct {
 	Password string `json:"password"`
 }
 type ChangePassword struct {
-	Id          string
+	NewPassword string
+	OldPassword string
+}
+type UpdatePassword struct {
+	Id       string
+	Password string
+}
+type Password struct {
 	NewPassword string
 	OldPassword string
 }

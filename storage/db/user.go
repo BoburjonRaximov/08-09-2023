@@ -55,21 +55,17 @@ func (p *userRepo) Update(req models.User) (string, error) {
 	UPDATE 
 		users
 	SET 
-		username=$2,
-	 	password=$3,
-		name=$4,
-		phone_number=$5,
-		age=$6,
+		name=$2,
+		phone_number=$3,
+		age=$4,
 		updated_at= NOW()
 	WHERE
 		 id=$1`
 	resp, err := p.db.Exec(context.Background(), query,
 		req.Id,
-		req.Username,
-		req.Password,
 		req.Name,
-		req.Age,
 		req.PhoneNumber,
+		req.Age,
 	)
 	if err != nil {
 		return "", err
@@ -234,30 +230,3 @@ func (p *userRepo) Delete(req models.RequestByID) (string, error) {
 	return "", errors.New("not found")
 }
 
-func (p *userRepo) ChangePassword(req models.ChangePassword) (string, error) {
-	user := models.User{}
-	if user.Password != req.OldPassword {
-		return "error", nil
-	}
-	query := `
-	UPDATE 
-		users
-	SET 
-	 	password=$2,
-	WHERE
-		 id=$1
-		 `
-	resp, err := p.db.Exec(context.Background(), query,
-		req.Id,
-		req.NewPassword,
-	)
-
-	if err != nil {
-		return "", err
-	}
-	if resp.RowsAffected() == 0 {
-		return "", pgx.ErrNoRows
-	}
-
-	return "changed", nil
-}

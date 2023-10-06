@@ -55,7 +55,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id    path     string  true  "id of user"
-// @Param        user    body     models.CreateUser  true  "data of user"
+// @Param        user    body     models.UpdateUser  true  "data of user"
 // @Success      200  {string}   string
 // @Failure      400  {object}  response.ErrorResp
 // @Failure      404  {object}  response.ErrorResp
@@ -100,9 +100,7 @@ func (h *Handler) GetUser(c *gin.Context) {
 		fmt.Println("error Person Get:", err.Error())
 		return
 	}
-
 	c.JSON(http.StatusOK, resp)
-
 }
 
 // @Security ApiKeyAuth
@@ -169,32 +167,3 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
-// @Router       /change/{id} [put]
-// @Summary      change password
-// @Description  api for update password
-// @Tags         changePassword
-// @Accept       json
-// @Produce      json
-// @Param        id    path     string  true  "id of user"
-// @Param        changePassword    body     models.ChangePassword  true  "data of users"
-// @Success      200  {string}   string
-// @Failure      400  {object}  response.ErrorResp
-// @Failure      404  {object}  response.ErrorResp
-// @Failure      500  {object}  response.ErrorResp
-func (h *Handler) ChangePassword(c *gin.Context) {
-	var user models.ChangePassword
-	err := c.ShouldBindJSON(&user)
-	if err != nil {
-		h.log.Error("error while binding:", logger.Error(err))
-		c.JSON(http.StatusBadRequest, "invalid body")
-		return
-	}
-	user.Id = c.Param("id")
-	resp, err := h.storage.User().ChangePassword(user)
-	if err != nil {
-		fmt.Println("error user changrepassword:", err.Error())
-		c.JSON(http.StatusInternalServerError, "internal server error")
-		return
-	}
-	c.JSON(http.StatusOK, resp)
-}

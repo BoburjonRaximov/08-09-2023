@@ -15,65 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/change/{id}": {
-            "put": {
-                "description": "api for update password",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "changePassword"
-                ],
-                "summary": "change password",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id of user",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "data of users",
-                        "name": "changePassword",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.ChangePassword"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResp"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResp"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResp"
-                        }
-                    }
-                }
-            }
-        },
         "/login": {
             "post": {
                 "description": "api for create persons",
@@ -319,7 +260,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.CreateUser"
+                            "$ref": "#/definitions/models.UpdateUser"
                         }
                     }
                 ],
@@ -353,20 +294,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.ChangePassword": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "newPassword": {
-                    "type": "string"
-                },
-                "oldPassword": {
-                    "type": "string"
-                }
-            }
-        },
         "models.CreateUser": {
             "type": "object",
             "properties": {
@@ -402,6 +329,20 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UpdateUser": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
                     "type": "string"
                 }
             }
